@@ -48,8 +48,8 @@ disqusShortname = ""
       url = "#"
 
     [[params.navigation.links]]
-      name = "Blogs"
-      url = "blogs"
+      name = "Projects"
+      url = "projects"
 
     #[[params.navigation.links]]
      # name = "Generic Blog"
@@ -95,37 +95,37 @@ disqusShortname = ""
       title = "Where Do People Drink The Most Beer, Wine And Spirits?"
       subtitle = "Analyse alchohol consumption in different countries"
       image = "drinks.jpg"
-      url = "blogs/aliquam"
+      url = "projects/project1"
 
     [[params.tiles.showcase]]
       title = "Analysis of movies"
       subtitle = "Explore IMDB databset to develop analysis on movies"
       image = "movies.jpg"
-      url = "blogs/tempus"
+      url = "projects/project2"
 
     [[params.tiles.showcase]]
       title = "Climate change and temperature anomalies"
       subtitle = "define temperature anamolies in the period between 1951-1980"
       image = "climate change.jpeg"
-      url = "blogs/magna"
+      url = "projects/project3"
 
     [[params.tiles.showcase]]
       title = "General Social Survey (GSS)"
       subtitle = "estimate values of population parameters of interest about US adults"
       image = "survey.jpeg"
-      url = "blogs/ipsum"
+      url = "projects/project4"
 
     [[params.tiles.showcase]]
       title = "Youth Risk Behavior Surveillance"
       subtitle = "examine the possible relationship between a high schooler’s weight and their physical activity"
       image = "youth.jpeg"
-      url = "blogs/ipsum"
+      url = "projects/project5"
 
     [[params.tiles.showcase]]
       title = "IMDB ratings: Differences between directors"
       subtitle = "explore whether the mean IMDB rating for Steven Spielberg and Tim Burton are the same or not"
       image = "director.jpeg"
-      url = "blogs/ipsum"
+      url = "projects/project6"
     # You can make more showcases by copy and pasting the code above
 
   [params.blog]

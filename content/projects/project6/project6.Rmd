@@ -1,0 +1,136 @@
+---
+title: "project6"
+output: html_document
+---
+
+```{r, setup, echo=FALSE}
+knitr::opts_chunk$set(
+  message = FALSE, 
+  warning = FALSE, 
+  tidy=FALSE,     # display code as typed
+  size="small")   # slightly smaller font for code
+options(digits = 3)
+
+# default figure size
+knitr::opts_chunk$set(
+  fig.width=6.75, 
+  fig.height=6.75,
+  fig.align = "center"
+)
+```
+
+
+```{r load-libraries, echo=FALSE}
+library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
+library(mosaic)
+library(ggthemes)
+library(GGally)
+library(readxl)
+library(here)
+library(skimr)
+library(janitor)
+library(broom)
+library(tidyquant)
+library(infer)
+library(openintro)
+library(tidyquant)
+```
+# IMDB ratings: Differences between directors
+
+Recall the IMBD ratings data. I would like you to explore whether the mean IMDB rating for Steven Spielberg and Tim Burton are the same or not. I have already calculated the confidence intervals for the mean ratings of these two directors and as you can see they overlap. 
+
+
+```{r directors, echo=FALSE, out.width="100%"}
+knitr::include_graphics(here::here("images", "directors.png"), error = FALSE)
+```
+
+First, I would like you to reproduce this graph. You may find `geom_errorbar()` and `geom_rect()` useful.
+
+In addition, you will run a hpothesis test. You should use both the `t.test` command and the `infer` package to simulate from a null distribution, where you assume zero difference between the two.
+
+> Before anything, write down the null and alternative hypotheses, as well as the resulting test statistic and the associated t-stat or p-value. At the end of the day, what do you conclude?
+
+You can load the data and examine its structure
+
+```{r load-movies-data}
+movies <- read_csv(here::here("data", "movies.csv"))
+glimpse(movies)
+```
+
+Your R code and analysis should go here. If you want to insert a blank chunk of R code you can just hit `Ctrl/Cmd+Alt+I` 
+
+```{r}
+
+directors_ci <- movies %>%
+  filter(director %in% c("Steven Spielberg", "Tim Burton")) %>%
+  filter(!is.na(rating)) %>% 
+  group_by(director) %>%
+  summarise(
+	mean_rating = mean(rating),
+            sd_rating = sd(rating),
+            count = n(),
+            tcritical = qt(.975, count-1),
+            ste = sd_rating/sqrt(count),
+            margin_of_error = tcritical*ste,
+            ci_low = mean_rating - margin_of_error,
+            ci_high = mean_rating + margin_of_error
+	)
+
+ggplot(directors_ci,
+       aes(y = reorder(director, mean_rating),
+           x = mean_rating,
+           colour = director)) +
+  geom_point(size=2) +
+  geom_errorbar(width = .1, aes(xmin = ci_low, xmax = ci_high), lwd = 1.75) +
+  geom_text(aes(label=round(mean_rating,2)),hjust=0.5, vjust=-2,
+            size=5) +
+  geom_rect(mapping = aes(xmin = 7.27, 
+                          xmax = 7.33, 
+                          ymin = 0, 
+                          ymax = 3), 
+            colour = "grey", 
+            alpha= 0.4) +
+  labs(x = "Mean IMDB Rating",
+       y = " ",
+       title = "Do Spielberg and Burton have the same mean IMDB rating?",
+       subtitle = "95% confidence intervals overlap") +
+  theme(legend.position = "none") +
+  theme_bw() +
+  theme(legend.position = "none")
+
+
+```
+
+```{r}
+
+# Ho: Mean rating for Steven Spielberg and Tim Burton show difference = 0
+# H1: Mean rating for Steven Spielberg and Tim Burton show difference != 0
+
+#use t.test
+directors <- movies %>%
+  filter(director %in% c("Steven Spielberg","Tim Burton")) 
+  t.test(rating ~ director, data = directors)
+
+library(infer)
+  
+#use infer package
+obs_diff_rating <-directors %>%
+  specify(rating ~ director) %>%
+  calculate(stat = "diff in means", order = c('Steven Spielberg', 'Tim Burton'))
+
+null_rating <- directors %>%
+  specify(rating ~ director) %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 1000, type = "permute") %>%
+  calculate(stat = "diff in means", order = c('Steven Spielberg', 'Tim Burton'))
+
+null_rating %>% visualize() +
+  shade_p_value(obs_stat = obs_diff_rating, direction = "two-sided") +
+  theme_bw()
+
+null_rating %>%
+  get_p_value(obs_stat = obs_diff_rating, direction = "two_sided")
+
+# With a p-value of 0.01 that is lower 0.05 we reject the null hypothesis and observe a significant difference
+
+```
