@@ -93,37 +93,37 @@ disqusShortname = ""
     
     [[params.tiles.showcase]]
       title = "Where Do People Drink The Most Beer, Wine And Spirits?"
-      subtitle = "Ipsum Dolor Sit Amet"
+      subtitle = "Analyse alchohol consumption in different countries"
       image = "drinks.jpg"
       url = "blogs/aliquam"
 
     [[params.tiles.showcase]]
       title = "Analysis of movies"
-      subtitle = "Feugiat Amet Tempus"
+      subtitle = "Explore IMDB databset to develop analysis on movies"
       image = "movies.jpg"
       url = "blogs/tempus"
 
     [[params.tiles.showcase]]
       title = "Climate change and temperature anomalies"
-      subtitle = "Lorem Etiam Nullam"
+      subtitle = "define temperature anamolies in the period between 1951-1980"
       image = "climate change.jpeg"
       url = "blogs/magna"
 
     [[params.tiles.showcase]]
       title = "General Social Survey (GSS)"
-      subtitle = "Nisl Sed Aliquam"
+      subtitle = "estimate values of population parameters of interest about US adults"
       image = "survey.jpeg"
       url = "blogs/ipsum"
 
     [[params.tiles.showcase]]
       title = "Youth Risk Behavior Surveillance"
-      subtitle = "Ipsum Dolor Sit Amet"
+      subtitle = "examine the possible relationship between a high schooler’s weight and their physical activity"
       image = "youth.jpeg"
       url = "blogs/ipsum"
 
     [[params.tiles.showcase]]
       title = "IMDB ratings: Differences between directors"
-      subtitle = "Feugiat Amet Tempus"
+      subtitle = "explore whether the mean IMDB rating for Steven Spielberg and Tim Burton are the same or not"
       image = "director.jpeg"
       url = "blogs/ipsum"
     # You can make more showcases by copy and pasting the code above
