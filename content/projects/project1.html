@@ -1,3 +1,8 @@
+---
+title: "Project1"
+output: html_document
+---
+
 
 
 <div id="where-do-people-drink-the-most-beer-wine-and-spirits" class="section level1">
@@ -165,27 +170,30 @@ glimpse(drinks)</code></pre>
 drinks %&gt;%
   arrange(desc(beer_servings)) %&gt;% 
   head(25) %&gt;% 
-  ggplot(aes(x = beer_servings, y =reorder(country, -beer_servings))) +
+  ggplot(aes(x = beer_servings, y =reorder(country, beer_servings))) +
   labs(title = &quot;Top 25 Beer Consuming Countries&quot;, x = &#39;Country&#39;, y = &#39;Beer Servings&#39;) +
-  geom_col()</code></pre>
-<p><img src="project1_files/figure-html/beer_plot-1.png" width="648" style="display: block; margin: auto;" /></p>
+  geom_col() +
+  theme_solarized()</code></pre>
+<p><img src="./project1_files/figure-html/beer_plot-1.png" width="648" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># YOUR CODE GOES HERE
 drinks %&gt;% 
   arrange(desc(wine_servings)) %&gt;% 
   head(25) %&gt;% 
-  ggplot(aes(x = wine_servings, y = reorder(country, -wine_servings))) +
+  ggplot(aes(x = wine_servings, y = reorder(country, wine_servings))) +
   labs(title = &quot;Top 25 Wine Consuming Countries&quot;, x = &#39;Country&#39;, y = &#39;Wine Servings&#39;) +
-  geom_col()</code></pre>
-<p><img src="project1_files/figure-html/wine_plot-1.png" width="648" style="display: block; margin: auto;" /></p>
+  geom_col()+
+  theme_solarized()</code></pre>
+<p><img src="./project1_files/figure-html/wine_plot-1.png" width="648" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># YOUR CODE GOES HERE
 drinks %&gt;% 
   arrange(desc(spirit_servings)) %&gt;% 
   head(25) %&gt;% 
-  ggplot(aes(x = spirit_servings, y = reorder(country, -spirit_servings))) +
+  ggplot(aes(x = spirit_servings, y = reorder(country, spirit_servings))) +
   labs(title = &quot;Top 25 Spirit Consuming Countries&quot;, x = &#39;Country&#39;, y = &#39;Spirit Servings&#39;) +
-  geom_col()</code></pre>
-<p><img src="project1_files/figure-html/spirit_plot-1.png" width="648" style="display: block; margin: auto;" /></p>
-<p>The 3 plots below display relatively predictable results about the different drinking habits of various nations. Looking at the wine graph first, it is unsurprising to see 2 of the 3 top wine producing nations in the top 15 consumers of the beverage. The number 1 wine producer in 2019 was France, and this is reflected through their position at the top of the wine consumption graph, while 2nd place Italy is somewhat further down the list. Possibly surprising is the exclusion of Spain in the graph, as they stood as the 3rd highest producer of wine last year, but this is likely an outlier as many of the other top producing nations also appear in the top 15 consumption graph.
-The beer consumption graph also displays quite predictable results when one looks at the countries within it. As expected, many of the countries that make up the top 15 are Anglo Saxon (US/Ireland/Australia) or Central European (Germany/Poland/Netherlands etc), and this accurately reflects the drinking culture prevalent in those nations. Namibia’s position as the top country can be explained by its German links and culture, having spent decades under German colonisation.
-Finally, the results displayed in the spirit consumption graph can be attributed to the different spirits produced in each of the regions present. The large quantity of Carribean countries in the graph is likely due to the high levels of production/consumption of rum that occurs in the region, combined with various cocktails due to its popularity as a holiday destination. The presence of the Russian Federation and other Eastern European countries can likely be attributed to the production and consumption of vodka, which started in Russia and was adopted by its satellite states during the period of the USSR.</p>
+  geom_col()+
+  theme_solarized()</code></pre>
+<p><img src="./project1_files/figure-html/spirit_plot-1.png" width="648" style="display: block; margin: auto;" /></p>
+<p>The 3 plots below display relatively predictable results about the different drinking habits of various nations. Looking at the wine graph first, it is unsurprising to see 2 of the 3 top wine producing nations in the top 15 consumers of the beverage. The number 1 wine producer in 2019 was France, and this is reflected through their position at the top of the wine consumption graph, while 2nd place Italy is somewhat further down the list. Possibly surprising is the exclusion of Spain in the graph, as they stood as the 3rd highest producer of wine last year, but this is likely an outlier as many of the other top producing nations also appear in the top 15 consumption graph.</p>
+<p>The beer consumption graph also displays quite predictable results when one looks at the countries within it. As expected, many of the countries that make up the top 15 are Anglo Saxon (US/Ireland/Australia) or Central European (Germany/Poland/Netherlands etc), and this accurately reflects the drinking culture prevalent in those nations. Namibia’s position as the top country can be explained by its German links and culture, having spent decades under German colonisation.</p>
+<p>Finally, the results displayed in the spirit consumption graph can be attributed to the different spirits produced in each of the regions present. The large quantity of Carribean countries in the graph is likely due to the high levels of production/consumption of rum that occurs in the region, combined with various cocktails due to its popularity as a holiday destination. The presence of the Russian Federation and other Eastern European countries can likely be attributed to the production and consumption of vodka, which started in Russia and was adopted by its satellite states during the period of the USSR.</p>
 </div>

@@ -48,8 +48,8 @@ disqusShortname = ""
       url = "#"
 
     [[params.navigation.links]]
-      name = "Projects"
-      url = "projects"
+      name = "Blogs"
+      url = "blogs"
 
     #[[params.navigation.links]]
      # name = "Generic Blog"
@@ -117,7 +117,7 @@ disqusShortname = ""
 
     [[params.tiles.showcase]]
       title = "Youth Risk Behavior Surveillance"
-      subtitle = "examine the possible relationship between a high schooler’s weight and their physical activity"
+      subtitle = "consider the possible relationship between a high schooler’s weight and their physical activity"
       image = "youth.jpeg"
       url = "projects/project5"
 

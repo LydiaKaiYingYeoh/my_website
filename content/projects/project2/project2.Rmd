@@ -3,9 +3,39 @@ title: "project2"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r, setup, echo=FALSE}
+knitr::opts_chunk$set(
+  message = FALSE, 
+  warning = FALSE, 
+  tidy=FALSE,     # display code as typed
+  size="small")   # slightly smaller font for code
+options(digits = 3)
+
+# default figure size
+knitr::opts_chunk$set(
+  fig.width=6.75, 
+  fig.height=6.75,
+  fig.align = "center"
+)
 ```
+
+
+```{r load-libraries, warning=FALSE, message=FALSE, echo=FALSE}
+library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
+library(mosaic)
+library(ggthemes)
+library(lubridate)
+library(fivethirtyeight)
+library(here)
+library(skimr)
+library(janitor)
+library(vroom)
+library(tidyquant)
+library(rvest)    # scrape websites
+library(purrr)  
+library(lubridate) #to handle dates
+```
+
 
 # Analysis of movies- IMDB dataset
 
@@ -18,7 +48,7 @@ glimpse(movies)
 ```
 
 
-```{r}
+```{r, skim}
 skim(movies)
 anyDuplicated(movies)
 
@@ -39,7 +69,7 @@ movies %>%
 
 
 Table with the average gross earning, average budget and return on budget by genre
-```{r}
+```{r, genre}
 movies %>% 
   group_by(genre) %>% 
   summarise(
@@ -54,7 +84,7 @@ movies %>%
 
 
 Table with top 15 directors who have created the highest gross revenue in the box office
-```{r}
+```{r, movies}
 movies %>%
   group_by(director) %>% 
   summarise(
@@ -70,7 +100,7 @@ movies %>%
 
 
 Table that describes how ratings are distributed by genre. We don't want just the mean, but also, min, max, median, SD and some kind of a histogram or density graph that visually shows how ratings are distributed.
-```{r}
+```{r, ratings}
 ratings_dist <- movies %>% 
   group_by(genre) %>% 
   summarise(

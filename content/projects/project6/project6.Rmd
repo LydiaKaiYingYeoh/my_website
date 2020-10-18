@@ -39,13 +39,6 @@ library(tidyquant)
 
 Recall the IMBD ratings data. I would like you to explore whether the mean IMDB rating for Steven Spielberg and Tim Burton are the same or not. I have already calculated the confidence intervals for the mean ratings of these two directors and as you can see they overlap. 
 
-
-```{r directors, echo=FALSE, out.width="100%"}
-knitr::include_graphics(here::here("images", "directors.png"), error = FALSE)
-```
-
-First, I would like you to reproduce this graph. You may find `geom_errorbar()` and `geom_rect()` useful.
-
 In addition, you will run a hpothesis test. You should use both the `t.test` command and the `infer` package to simulate from a null distribution, where you assume zero difference between the two.
 
 > Before anything, write down the null and alternative hypotheses, as well as the resulting test statistic and the associated t-stat or p-value. At the end of the day, what do you conclude?
@@ -125,8 +118,7 @@ null_rating <- directors %>%
   calculate(stat = "diff in means", order = c('Steven Spielberg', 'Tim Burton'))
 
 null_rating %>% visualize() +
-  shade_p_value(obs_stat = obs_diff_rating, direction = "two-sided") +
-  theme_bw()
+  shade_p_value(obs_stat = obs_diff_rating, direction = "two-sided")
 
 null_rating %>%
   get_p_value(obs_stat = obs_diff_rating, direction = "two_sided")
