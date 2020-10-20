@@ -101,7 +101,7 @@ disqusShortname = ""
       title = "Movies"
       subtitle = "Explore IMDB databset to develop analysis on movies"
       image = "movies.jpg"
-      url = "projects/project"
+      url = "projects/project2"
 
     [[params.tiles.showcase]]
       title = "Climate change and temperature anomalies"
