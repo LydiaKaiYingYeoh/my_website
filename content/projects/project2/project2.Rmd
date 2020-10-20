@@ -1,0 +1,124 @@
+---
+title: "project2"
+output: html_document
+---
+
+```{r, setup, echo=FALSE}
+knitr::opts_chunk$set(
+  message = FALSE, 
+  warning = FALSE, 
+  tidy=FALSE,     # display code as typed
+  size="small")   # slightly smaller font for code
+options(digits = 3)
+
+# default figure size
+knitr::opts_chunk$set(
+  fig.width=6.75, 
+  fig.height=6.75,
+  fig.align = "center"
+)
+```
+
+
+```{r load-libraries, warning=FALSE, message=FALSE, echo=FALSE}
+library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
+library(mosaic)
+library(ggthemes)
+library(lubridate)
+library(fivethirtyeight)
+library(here)
+library(skimr)
+library(janitor)
+library(vroom)
+library(tidyquant)
+library(rvest)    # scrape websites
+library(purrr)  
+library(lubridate) #to handle dates
+```
+# Analysis of movies- IMDB dataset
+
+  
+```{r,load_movies, warning=FALSE, message=FALSE, eval=TRUE}
+
+movies <- read_csv(here::here("data", "movies.csv"))
+glimpse(movies)
+
+```
+
+
+```{r}
+skim(movies)
+anyDuplicated(movies)
+
+```
+No missing values
+
+No duplicated values since anyDuplicated returns zero
+
+
+
+Table with the count of movies by genre, ranked in descending order
+```{r}
+movies %>% 
+  group_by(genre) %>% 
+  count(sort = TRUE)
+```
+
+
+
+Table with the average gross earning, average budget and return on budget by genre
+```{r}
+movies %>% 
+  group_by(genre) %>% 
+  summarise(
+    gross_average = mean(gross),
+    budget_average = mean(budget),
+    return_on_budget = gross_average/budget_average
+  ) %>% 
+  arrange(desc(return_on_budget))
+
+```
+
+
+
+Table with top 15 directors who have created the highest gross revenue in the box office
+```{r}
+movies %>%
+  group_by(director) %>% 
+  summarise(
+    total_gross = sum(gross),
+    gross_mean = mean(gross),
+    gross_median = median(gross),
+    gross_std = sqrt(var(gross))
+  ) %>% 
+  arrange(desc(total_gross)) %>% 
+  head(15)
+```
+Table that describes how ratings are distributed by genre. We don't want just the mean, but also, min, max, median, SD and some kind of a histogram or density graph that visually shows how ratings are distributed.
+```{r}
+ratings_dist <- movies %>% 
+  group_by(genre) %>% 
+  summarise(
+    mean_ratings = mean(rating),
+    min_ratings = min(rating),
+    max_ratings = max(rating),
+    SD = sqrt(var(rating))
+  )
+
+ratings_dist
+
+ggplot(ratings_dist, aes(x = mean_ratings)) +
+  geom_histogram()
+
+ggplot(ratings_dist, aes(x = min_ratings)) +
+  geom_histogram()
+
+ggplot(ratings_dist, aes(x = max_ratings)) +
+  geom_histogram()
+
+ggplot(ratings_dist, aes(x = SD)) +
+  geom_histogram()
+
+  
+  
+```
