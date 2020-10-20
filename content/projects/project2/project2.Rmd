@@ -1,6 +1,6 @@
 ---
 title: "Analysing Movies by Genres"
-image: movie2.jpeg
+image: movies3.jpg
 output: html_document
 ---
 
