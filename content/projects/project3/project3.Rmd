@@ -1,5 +1,5 @@
 ---
-title: "project3"
+title: "Climate Change"
 output: html_document
 ---
 
@@ -109,7 +109,7 @@ ggplot(tidyweather, aes(x=date, y = delta))+
     x = "Date",
     y = "Delta"
   ) +
-  theme_economist()
+  theme_solarized()
 
 ```
 
@@ -128,7 +128,7 @@ ggplot(tidyweather, aes(x=year, y = delta))+
     y = ""
   ) +
   facet_wrap(~month, scales = 'free', labeller = 'label_value') +
-  theme_economist()
+  theme_solarized()
 ```
 
 
@@ -160,7 +160,7 @@ Now that we have the `interval` variable, we can create a density plot to study 
 
 ggplot(comparison, aes(x=delta, fill=interval))+
   geom_density(alpha=0.2) +   #density plot with tranparency set to 20%
-  theme_economist() +                #theme
+  theme_solarized() +                #theme
   labs (
     title = "Density Plot for Monthly Temperature Anomalies",
     y     = "Density"         #changing y-axis label to sentence case
@@ -188,12 +188,12 @@ ggplot(average_annual_anomaly, aes(x=Year, y= annual_average_delta))+
   geom_smooth() +
   
   #change to theme
-  theme_economist() +
+  theme_solarized() +
   labs (
     title = "Climate change has been accelerating exponentially since 1960",
     y     = "Average Annual Delta"
   ) +
-  theme_economist()
+  theme_solarized()
 
 
 ```
@@ -239,7 +239,7 @@ comparison %>%
   specify(response = delta) %>% 
   generate(reps = 1000) %>% 
   calculate(stat = "mean") %>% 
-  visualise() + theme_economist()
+  visualise() + theme_solarized()
 
 ```
 

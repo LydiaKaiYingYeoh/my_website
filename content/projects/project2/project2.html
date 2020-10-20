@@ -1,12 +1,12 @@
 ---
-title: "project2"
+title: "Movies"
 output: html_document
 ---
 
 
 
-<div id="analysis-of-movies--imdb-dataset" class="section level1">
-<h1>Analysis of movies- IMDB dataset</h1>
+<div id="analysis-of-movies---imdb-dataset" class="section level1">
+<h1>Analysis of movies - IMDB dataset</h1>
 <pre class="r"><code>movies &lt;- read_csv(here::here(&quot;data&quot;, &quot;movies.csv&quot;))
 glimpse(movies)</code></pre>
 <pre><code>## Rows: 2,961
@@ -367,15 +367,15 @@ ratings_dist</code></pre>
 ## 16 Thriller            4.8          4.8         4.8 NA    
 ## 17 Western             5.70         4.1         7.3  2.26</code></pre>
 <pre class="r"><code>ggplot(ratings_dist, aes(x = mean_ratings)) +
-  geom_histogram()</code></pre>
+  geom_histogram() + theme_economist()</code></pre>
 <p><img src="/projects/project2/project2_files/figure-html/unnamed-chunk-5-1.png" width="648" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>ggplot(ratings_dist, aes(x = min_ratings)) +
-  geom_histogram()</code></pre>
+  geom_histogram() + theme_economist()</code></pre>
 <p><img src="/projects/project2/project2_files/figure-html/unnamed-chunk-5-2.png" width="648" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>ggplot(ratings_dist, aes(x = max_ratings)) +
-  geom_histogram()</code></pre>
+  geom_histogram() + theme_economist()</code></pre>
 <p><img src="/projects/project2/project2_files/figure-html/unnamed-chunk-5-3.png" width="648" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>ggplot(ratings_dist, aes(x = SD)) +
-  geom_histogram()</code></pre>
+  geom_histogram() + theme_economist()</code></pre>
 <p><img src="/projects/project2/project2_files/figure-html/unnamed-chunk-5-4.png" width="648" style="display: block; margin: auto;" /></p>
 </div>

@@ -1,5 +1,5 @@
 ---
-title: "project2"
+title: "Movies"
 output: html_document
 ---
 
@@ -35,7 +35,7 @@ library(rvest)    # scrape websites
 library(purrr)  
 library(lubridate) #to handle dates
 ```
-# Analysis of movies- IMDB dataset
+# Analysis of movies - IMDB dataset
 
   
 ```{r,load_movies, warning=FALSE, message=FALSE, eval=TRUE}
@@ -108,16 +108,16 @@ ratings_dist <- movies %>%
 ratings_dist
 
 ggplot(ratings_dist, aes(x = mean_ratings)) +
-  geom_histogram()
+  geom_histogram() + theme_economist()
 
 ggplot(ratings_dist, aes(x = min_ratings)) +
-  geom_histogram()
+  geom_histogram() + theme_economist()
 
 ggplot(ratings_dist, aes(x = max_ratings)) +
-  geom_histogram()
+  geom_histogram() + theme_economist()
 
 ggplot(ratings_dist, aes(x = SD)) +
-  geom_histogram()
+  geom_histogram() + theme_economist()
 
   
   
