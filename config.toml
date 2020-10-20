@@ -107,7 +107,7 @@ disqusShortname = ""
       title = "Climate change and temperature anomalies"
       subtitle = "define temperature anamolies in the period between 1951-1980"
       image = "climate change.jpeg"
-      url = "projects/project3"
+      url = "projects/project1"
 
     [[params.tiles.showcase]]
       title = "General Social Survey (GSS)"
