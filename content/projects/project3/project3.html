@@ -28,23 +28,7 @@ output: html_document
 </ol>
 <pre class="r"><code>tidyweather &lt;- weather %&gt;% 
   select(-c(&quot;J-D&quot;,&quot;D-N&quot;,&quot;DJF&quot;,&quot;MAM&quot;,&quot;JJA&quot;,&quot;SON&quot;)) %&gt;% 
-  pivot_longer(cols=&quot;Jan&quot;:&quot;Dec&quot;, names_to = &quot;Month&quot;, values_to = &quot;delta&quot;)
-
-tidyweather</code></pre>
-<pre><code>## # A tibble: 1,680 x 3
-##     Year Month delta
-##    &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;
-##  1  1880 Jan   -0.54
-##  2  1880 Feb   -0.38
-##  3  1880 Mar   -0.26
-##  4  1880 Apr   -0.37
-##  5  1880 May   -0.11
-##  6  1880 Jun   -0.22
-##  7  1880 Jul   -0.23
-##  8  1880 Aug   -0.24
-##  9  1880 Sep   -0.26
-## 10  1880 Oct   -0.32
-## # … with 1,670 more rows</code></pre>
+  pivot_longer(cols=&quot;Jan&quot;:&quot;Dec&quot;, names_to = &quot;Month&quot;, values_to = &quot;delta&quot;)</code></pre>
 <p>Inspect your dataframe. It should have three variables now, one each for</p>
 <ol style="list-style-type: decimal">
 <li>year,</li>
