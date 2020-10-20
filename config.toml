@@ -48,8 +48,8 @@ disqusShortname = ""
       url = "#"
 
     [[params.navigation.links]]
-      name = "Blogs"
-      url = "blogs"
+      name = "Projects"
+      url = "projects"
 
     #[[params.navigation.links]]
      # name = "Generic Blog"
@@ -69,7 +69,7 @@ disqusShortname = ""
     # Button Style 1
     [[params.navigation.button1]]
       name = "Get Started"
-      url = "blogs"
+      url = "projects"
 
     # Button Style 2
     [[params.navigation.button2]]
@@ -98,7 +98,7 @@ disqusShortname = ""
       url = "projects/project1"
 
     [[params.tiles.showcase]]
-      title = "Movies"
+      title = "Analysis on Movies"
       subtitle = "Explore IMDB databset to develop analysis on movies"
       image = "movies.jpg"
       url = "projects/project2"
@@ -112,7 +112,7 @@ disqusShortname = ""
     [[params.tiles.showcase]]
       title = "General Social Survey (GSS)"
       subtitle = "estimate values of population parameters of interest about US adults"
-      image = "survey.jpeg"
+      image = "projects/survey.jpeg"
       url = "projects/project4"
 
     [[params.tiles.showcase]]
@@ -143,7 +143,7 @@ disqusShortname = ""
     The projects done mainly used tidyverse which is a collection of R packages. Tidyverse allows us to use 
     various packages such as ggplot2, tidyr, tibble and etc. """
     buttonText = "Get Started"
-    url = "blogs"
+    url = "projects"
 
 
   # Contact section

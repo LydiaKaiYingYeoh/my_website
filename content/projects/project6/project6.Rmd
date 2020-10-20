@@ -1,5 +1,6 @@
 ---
 title: "Exploring the Mean IMDB Rating of Directors"
+image: directing.jpg
 output: html_document
 ---
 

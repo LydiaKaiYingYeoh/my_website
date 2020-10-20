@@ -1,5 +1,6 @@
 ---
-title: "Monitoring the trends, behaviours and attitudes on American society"
+title: "Monitoring the Trends, Behaviours and Attitudes on American Society"
+image: socialmedia.jpg
 output: html_document
 ---
 
