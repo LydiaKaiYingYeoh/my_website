@@ -1,3 +1,8 @@
+---
+title: "project5"
+output: html_document
+---
+
 
 
 <div id="youth-risk-behavior-surveillance" class="section level1">
@@ -268,11 +273,11 @@ yrbss %&gt;%
 <pre class="r"><code>yrbss %&gt;% 
 ggplot(aes(x= weight)) +
   geom_density() +
-  theme_solarized() +
+  theme_bw() +
   xlab(&quot;Weight&quot;) +
   ylab(&quot;Frequancy&quot;) +
   ggtitle(&quot;Distribution of weight&quot;)</code></pre>
-<p><img src="project5_files/figure-html/eda_on_weight-1.png" width="648" style="display: block; margin: auto;" /></p>
+<p><img src="/projects/project5/project5_files/figure-html/eda_on_weight-1.png" width="648" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># The distribution is right skewed  </code></pre>
 <p>Next, consider the possible relationship between a high schooler’s weight and their physical activity. Plotting the data is a useful first step because it helps us quickly visualize trends, identify strong associations, and develop research questions.</p>
 <p>Let’s create a new variable <code>physical_3plus</code>, which will be <code>yes</code> if they are physically active for at least 3 days a week, and <code>no</code> otherwise.</p>
@@ -312,86 +317,8 @@ formula_ci</code></pre>
   filter(!is.na(physical_3plus)) %&gt;% 
   ggplot( aes(y = reorder(physical_3plus, weight), x = weight)) +
   geom_boxplot() + 
-  labs(title = &quot;Physical activity does not affect weight&quot;, x = &quot;weight&quot;, y = &quot;physically active for at least 3 days a week&quot;)+
-  theme_solarized()</code></pre>
-<p><img src="project5_files/figure-html/boxplot-1.png" width="648" style="display: block; margin: auto;" /></p>
+  labs(title = &quot;Physical activity does not affect weight&quot;, x = &quot;weight&quot;, y = &quot;physically active for at least 3 days a week&quot;)</code></pre>
+<p><img src="/projects/project5/project5_files/figure-html/boxplot-1.png" width="648" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># We expected physical activity to be a driver of weight however the data shows that that might not be the case </code></pre>
-</div>
-<div id="confidence-interval" class="section level2">
-<h2>Confidence Interval</h2>
-<p>Boxplots show how the medians of the two distributions compare, but we can also compare the means of the distributions using either a confidence interval or a hypothesis test. Note that when we calculate the mean/SD, etc weight in these groups using the mean function, we must ignore any missing values by setting the <code>na.rm = TRUE</code>.</p>
-<pre class="r"><code>yrbss %&gt;%
-  group_by(physical_3plus) %&gt;%
-  filter(!is.na(physical_3plus)) %&gt;% 
-  summarise(mean_weight = mean(weight, na.rm = TRUE),
-            sd_weight = sd(weight, na.rm=TRUE),
-            count = n(),
-            se_weight = sd_weight/sqrt(count),
-            t_critical = qt(0.975, count-1), 
-            margin_of_error = t_critical * se_weight,
-            lower = mean_weight - t_critical * se_weight,
-            upper = mean_weight + t_critical * se_weight
-            )</code></pre>
-<pre><code>## # A tibble: 2 x 9
-##   physical_3plus mean_weight sd_weight count se_weight t_critical
-##   &lt;chr&gt;                &lt;dbl&gt;     &lt;dbl&gt; &lt;int&gt;     &lt;dbl&gt;      &lt;dbl&gt;
-## 1 no                    66.7      17.6  4404     0.266       1.96
-## 2 yes                   68.4      16.5  8906     0.175       1.96
-## # … with 3 more variables: margin_of_error &lt;dbl&gt;, lower &lt;dbl&gt;, upper &lt;dbl&gt;</code></pre>
-<p>There is an observed difference of about 1.77kg (68.44 - 66.67), and we notice that the two confidence intervals do not overlap. It seems that the difference is at least 95% statistically significant. Let us also conduct a hypothesis test.</p>
-</div>
-<div id="hypothesis-test-with-formula" class="section level2">
-<h2>Hypothesis test with formula</h2>
-<p>Write the null and alternative hypotheses for testing whether mean weights are different for those who exercise at least times a week and those who don’t.</p>
-<pre class="r"><code>t.test(weight ~ physical_3plus, data = yrbss)</code></pre>
-<pre><code>## 
-##  Welch Two Sample t-test
-## 
-## data:  weight by physical_3plus
-## t = -5, df = 7479, p-value = 9e-08
-## alternative hypothesis: true difference in means is not equal to 0
-## 95 percent confidence interval:
-##  -2.42 -1.12
-## sample estimates:
-##  mean in group no mean in group yes 
-##              66.7              68.4</code></pre>
-<pre class="r"><code>#H0: The mean weights for people physically active or not show difference = 0.
-#Ha: The mean weights for people physically active or not show difference != 0.</code></pre>
-</div>
-<div id="hypothesis-test-with-infer" class="section level2">
-<h2>Hypothesis test with <code>infer</code></h2>
-<p>Next, we will introduce a new function, <code>hypothesize</code>, that falls into the infer workflow. You will use this method for conducting hypothesis tests.</p>
-<p>But first, we need to initialize the test, which we will save as <code>obs_diff</code>.</p>
-<pre class="r"><code>obs_diff &lt;- yrbss %&gt;%
-  specify(weight ~ physical_3plus) %&gt;%
-  calculate(stat = &quot;diff in means&quot;, order = c(&quot;yes&quot;, &quot;no&quot;))</code></pre>
-<p>Notice how you can use the functions specify and calculate again like you did for calculating confidence intervals. Here, though, the statistic you are searching for is the difference in means, with the order being yes - no != 0.</p>
-<p>After you have initialized the test, you need to simulate the test on the null distribution, which we will save as null.</p>
-<pre class="r"><code>null_dist &lt;- yrbss %&gt;%
-  specify(weight ~ physical_3plus) %&gt;%
-  hypothesize(null = &quot;independence&quot;) %&gt;%
-  generate(reps = 1000, type = &quot;permute&quot;) %&gt;%
-  calculate(stat = &quot;diff in means&quot;, order = c(&quot;yes&quot;, &quot;no&quot;))</code></pre>
-<p>Here, <code>hypothesize</code> is used to set the null hypothesis as a test for independence, i.e., that there is no difference between the two population means. In one sample cases, the null argument can be set to <em>point</em> to test a hypothesis relative to a point estimate.</p>
-<p>Also, note that the <code>type</code> argument within generate is set to permute, which is the argument when generating a null distribution for a hypothesis test.</p>
-<p>We can visualize this null distribution with the following code:</p>
-<pre class="r"><code>ggplot(data = null_dist, aes(x = stat)) +
-  geom_histogram()+
-labs(title = &quot;The null distirbution&quot;) +
-  theme_solarized()</code></pre>
-<p><img src="project5_files/figure-html/unnamed-chunk-8-1.png" width="648" style="display: block; margin: auto;" /></p>
-<p>Now that the test is initialized and the null distribution formed, we can visualise to see how many of these null permutations have a difference of at least <code>obs_stat</code> of 1.77?</p>
-<p>We can also calculate the p-value for your hypothesis test using the function <code>infer::get_p_value()</code>.</p>
-<pre class="r"><code>null_dist %&gt;% visualize() +
-  shade_p_value(obs_stat = obs_diff, direction = &quot;two-sided&quot;) +
-  theme_solarized()</code></pre>
-<p><img src="project5_files/figure-html/unnamed-chunk-9-1.png" width="648" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>null_dist %&gt;%
-  get_p_value(obs_stat = obs_diff, direction = &quot;two_sided&quot;)</code></pre>
-<pre><code>## # A tibble: 1 x 1
-##   p_value
-##     &lt;dbl&gt;
-## 1       0</code></pre>
-<p>This the standard workflow for performing hypothesis tests.</p>
 </div>
 </div>

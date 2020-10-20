@@ -72,7 +72,7 @@ yrbss %>%
 yrbss %>% 
 ggplot(aes(x= weight)) +
   geom_density() +
-  theme_solarized() +
+  theme_bw() +
   xlab("Weight") +
   ylab("Frequancy") +
   ggtitle("Distribution of weight")
@@ -120,106 +120,7 @@ yrbss %>%
   filter(!is.na(physical_3plus)) %>% 
   ggplot( aes(y = reorder(physical_3plus, weight), x = weight)) +
   geom_boxplot() + 
-  labs(title = "Physical activity does not affect weight", x = "weight", y = "physically active for at least 3 days a week")+
-  theme_solarized()
+  labs(title = "Physical activity does not affect weight", x = "weight", y = "physically active for at least 3 days a week")
 
 # We expected physical activity to be a driver of weight however the data shows that that might not be the case 
 ```
-
-## Confidence Interval
-
-Boxplots show how the medians of the two distributions compare, but we can also compare the means of the distributions using either a confidence interval or a hypothesis test. Note that when we calculate the mean/SD, etc weight in these groups using the mean function, we must ignore any missing values by setting the `na.rm = TRUE`.
-
-
-```{r}
-yrbss %>%
-  group_by(physical_3plus) %>%
-  filter(!is.na(physical_3plus)) %>% 
-  summarise(mean_weight = mean(weight, na.rm = TRUE),
-            sd_weight = sd(weight, na.rm=TRUE),
-            count = n(),
-            se_weight = sd_weight/sqrt(count),
-            t_critical = qt(0.975, count-1), 
-            margin_of_error = t_critical * se_weight,
-            lower = mean_weight - t_critical * se_weight,
-            upper = mean_weight + t_critical * se_weight
-            )
-
-```
-
-There is an observed difference of about 1.77kg (68.44 - 66.67), and we notice that the two confidence intervals do not overlap. It seems that the difference is at least 95% statistically significant. Let us also conduct a hypothesis test.
-
-## Hypothesis test with formula
-
-Write the null and alternative hypotheses for testing whether mean weights are different for those who exercise at least times a week and those who don’t.
-
-```{r}
-t.test(weight ~ physical_3plus, data = yrbss)
-#H0: The mean weights for people physically active or not show difference = 0.
-#Ha: The mean weights for people physically active or not show difference != 0.
-
-```
-
-
-## Hypothesis test with `infer`
-
-
-Next, we will introduce a new function, `hypothesize`, that falls into the infer workflow. You will use this method for conducting hypothesis tests.
-
-But first, we need to initialize the test, which we will save as `obs_diff`.
-
-```{r}
-obs_diff <- yrbss %>%
-  specify(weight ~ physical_3plus) %>%
-  calculate(stat = "diff in means", order = c("yes", "no"))
-
-```
-
-
-
-Notice how you can use the functions specify and calculate again like you did for calculating confidence intervals. Here, though, the statistic you are searching for is the difference in means, with the order being yes - no != 0.
-
-After you have initialized the test, you need to simulate the test on the null distribution, which we will save as null.
-
-
-```{r}
-null_dist <- yrbss %>%
-  specify(weight ~ physical_3plus) %>%
-  hypothesize(null = "independence") %>%
-  generate(reps = 1000, type = "permute") %>%
-  calculate(stat = "diff in means", order = c("yes", "no"))
-
-```
-
-
-Here, `hypothesize` is used to set the null hypothesis as a test for independence, i.e., that there is no difference between the two population means. In one sample cases, the null argument can be set to *point* to test a hypothesis relative to a point estimate.
-
-Also, note that the `type` argument within generate is set to permute, which is the argument when generating a null distribution for a hypothesis test.
-
-We can visualize this null distribution with the following code:
-
-```{r}
-ggplot(data = null_dist, aes(x = stat)) +
-  geom_histogram()+
-labs(title = "The null distirbution") +
-  theme_solarized()
-```
-
-
-Now that the test is initialized and the null distribution formed, we can visualise to see how many of these null permutations have a difference of at least `obs_stat` of `r obs_diff %>% pull() %>% round(2)`?
-
-We can also calculate the p-value for your hypothesis test using the function `infer::get_p_value()`.
-
-```{r}
-
-null_dist %>% visualize() +
-  shade_p_value(obs_stat = obs_diff, direction = "two-sided") +
-  theme_solarized()
-
-null_dist %>%
-  get_p_value(obs_stat = obs_diff, direction = "two_sided")
-
-```
-
-
-This the standard workflow for performing hypothesis tests.
