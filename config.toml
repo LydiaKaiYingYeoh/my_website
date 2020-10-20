@@ -98,10 +98,10 @@ disqusShortname = ""
       url = "projects/project1"
 
     [[params.tiles.showcase]]
-      title = "Analysis of movies"
+      title = "Movies"
       subtitle = "Explore IMDB databset to develop analysis on movies"
       image = "movies.jpg"
-      url = "projects/project2"
+      url = "projects/project"
 
     [[params.tiles.showcase]]
       title = "Climate change and temperature anomalies"
