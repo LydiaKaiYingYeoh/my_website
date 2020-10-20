@@ -1,3 +1,8 @@
+---
+title: "project4"
+output: html_document
+---
+
 
 
 <div id="general-social-survey-gss" class="section level1">
@@ -297,7 +302,7 @@ ggplot(formula_ci_twitter, aes(x=reorder(twitter, prop), y=prop, colour=twitter)
   coord_flip()+
   theme(legend.position = &quot;none&quot;)+
   NULL</code></pre>
-<p><img src="project4_files/figure-html/unnamed-chunk-8-1.png" width="648" style="display: block; margin: auto;" /></p>
+<p><img src="/projects/project4/project4_files/figure-html/unnamed-chunk-8-1.png" width="648" style="display: block; margin: auto;" /></p>
 </div>
 <div id="email-usage" class="section level2">
 <h2>Email usage</h2>
@@ -336,7 +341,7 @@ ggplot(gss_email, aes(x= email)) +
   xlab(&quot;Time spent on email&quot;) +
   ylab(&quot;Frequancy&quot;) +
   ggtitle(&quot;Distribution of Email&quot;)</code></pre>
-<p><img src="project4_files/figure-html/unnamed-chunk-10-1.png" width="648" style="display: block; margin: auto;" /></p>
+<p><img src="/projects/project4/project4_files/figure-html/unnamed-chunk-10-1.png" width="648" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>summarise(gss_email, mean_mins_email =  mean(gss_email$email), median_mins_email = median(gss_email$email))</code></pre>
 <pre><code>## # A tibble: 1 x 2
 ##   mean_mins_email median_mins_email
@@ -367,9 +372,9 @@ email_upper_ci_min &lt;- email_ci$upper_ci%%60
 
 
 paste(&quot;Lower 95% CI email usage:&quot;, email_ci$lower_ci%/%60 , &quot;hours and&quot;, round(email_ci$lower_ci%%60, digits = 0), &quot;minutes&quot;) </code></pre>
-<pre><code>## [1] &quot;Lower 95% CI email usage: 6 hours and 27 minutes&quot;</code></pre>
+<pre><code>## [1] &quot;Lower 95% CI email usage: 6 hours and 26 minutes&quot;</code></pre>
 <pre class="r"><code>paste(&quot;Upper 95% CI email usage:&quot;, email_ci$upper_ci%/%60, &quot;hours and&quot;, round(email_ci$upper_ci%%60, digits = 0), &quot;minutes&quot;) </code></pre>
-<pre><code>## [1] &quot;Upper 95% CI email usage: 7 hours and 28 minutes&quot;</code></pre>
+<pre><code>## [1] &quot;Upper 95% CI email usage: 7 hours and 30 minutes&quot;</code></pre>
 <ol style="list-style-type: decimal">
 <li>Would you expect a 99% confidence interval to be wider or narrower than the interval you calculated above? Explain your reasoning.
 As comparison to the 95% confidence interval, I would expect the 99% confidence interval to be wider. For the 95% confidence interval, we are confident that 95% of the sample fall between 6 hours and 27 minutes and 7 hours and 29 minutes. Thus, the 99% confience interval would be wider as the lower interval would need to be smaller than 6 hours and 27 minutes and the upper interval would need to be larger than 7 hours and 29 minutes, resulting that we can predict with 99% confidence that the value within this range.</li>
